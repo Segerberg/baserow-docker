@@ -3,6 +3,7 @@ RUN rm -rf /baserow.sh
 
 COPY  baserow.sh /baserow.sh
 RUN chmod 777 /baserow.sh
+RUN chmod 777 /etc/postgresql/11/main/
 EXPOSE 8080
 ENTRYPOINT ["/baserow.sh"]
 CMD ["start"]

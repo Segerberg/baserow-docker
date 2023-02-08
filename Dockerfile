@@ -6,7 +6,8 @@ FROM docker://baserow/baserow:1.14.0
 
 RUN chmod 777 /baserow.sh
 RUN chmod 777 /baserow/supervisor/start.sh
-run chmod 777 /baserow/data/redis
+RUN mkdir /baserow/data/redis
+RUN chmod 777 /baserow/data/redis
 #RUN chmod 777 /etc/postgresql/11/main/
 EXPOSE 8080
 ENTRYPOINT ["/baserow.sh"]

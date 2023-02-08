@@ -290,30 +290,30 @@ run_cmd_with_db(){
 }
 
 case "$1" in
-    start)
-      exec /baserow/supervisor/start.sh "${@:2}"
-    ;;
+#    start)
+#      exec /baserow/supervisor/start.sh "${@:2}"
+#    ;;
     backend-cmd-with-db)
       run_cmd_with_db gosu "$DOCKER_USER" /baserow/backend/docker/docker-entrypoint.sh "${@:2}"
     ;;
-    start-only-db)
-      check_can_start_embedded_services
-      # Run this temporary server with its own pg_hba.conf so if the above check somehow
-      # fails we don't accidentally edit the pg_hba.conf of the normal embedded postgres
-      # which we don't want exposed at all.
-      TMP_HBA_FILE="$POSTGRES_LOCATION"/pg_hba_temp.conf
-      cp -p "$POSTGRES_LOCATION"/pg_hba.conf "$TMP_HBA_FILE"
-
-      HBA_ENTRY="host    all             all             all                     md5"
-      echo "$HBA_ENTRY" \
-        | tee -a "$TMP_HBA_FILE"
-
-      export EXTRA_POSTGRES_ARGS="-c listen_addresses='*' -c hba_file=$TMP_HBA_FILE"
-      export SUPERVISOR_CONF=/baserow/supervisor/supervisor_include_only.conf
-      startup_echo "INFO: You can find the baserow database user's password by running"
-      startup_echo "docker exec -it baserow cat $DATA_DIR/.pgpass"
-      exec /baserow/supervisor/start.sh "${@:2}"
-    ;;
+#    start-only-db)
+#      check_can_start_embedded_services
+#      # Run this temporary server with its own pg_hba.conf so if the above check somehow
+#      # fails we don't accidentally edit the pg_hba.conf of the normal embedded postgres
+#      # which we don't want exposed at all.
+#      TMP_HBA_FILE="$POSTGRES_LOCATION"/pg_hba_temp.conf
+#      cp -p "$POSTGRES_LOCATION"/pg_hba.conf "$TMP_HBA_FILE"
+#
+#      HBA_ENTRY="host    all             all             all                     md5"
+#      echo "$HBA_ENTRY" \
+#        | tee -a "$TMP_HBA_FILE"
+#
+#      export EXTRA_POSTGRES_ARGS="-c listen_addresses='*' -c hba_file=$TMP_HBA_FILE"
+#      export SUPERVISOR_CONF=/baserow/supervisor/supervisor_include_only.conf
+#      startup_echo "INFO: You can find the baserow database user's password by running"
+#      startup_echo "docker exec -it baserow cat $DATA_DIR/.pgpass"
+#      exec /baserow/supervisor/start.sh "${@:2}"
+#    ;;
     backend-cmd)
       cd /baserow/backend
       docker_safe_exec /baserow/backend/docker/docker-entrypoint.sh "${@:2}"

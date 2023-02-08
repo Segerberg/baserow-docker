@@ -125,6 +125,7 @@ fi
 # Ensure the data dir exists
 if [[ ! -d "$DATA_DIR" ]]; then
   mkdir -p "$DATA_DIR"
+  chmod 777 "$DATA_DIR"
   # chown "$DOCKER_USER": "$DATA_DIR"
 fi
 
@@ -216,21 +217,27 @@ file_env EMAIL_SMTP_PASSWORD
 
 if [[ -z "${DISABLE_EMBEDDED_REDIS:-}" ]]; then
   mkdir -p "$DATA_DIR"/redis
+  chmod 777 "$DATA_DIR"/redis
   #chown -R redis:redis "$DATA_DIR"/redis
 fi
 
 if [[ -z "${DISABLE_EMBEDDED_PSQL:-}" ]]; then
   mkdir -p "$DATA_DIR"/postgres
+  chmod 777 "$DATA_DIR"/postgres
   #chown -R postgres:postgres "$DATA_DIR"/postgres
 fi
 
 mkdir -p "$DATA_DIR"/caddy
+chmod 777 "$DATA_DIR"/caddy
 #chown -R "$DOCKER_USER": "$DATA_DIR"/caddy
 mkdir -p "$DATA_DIR"/media
+chmod 777 "$DATA_DIR"/media
 #chown -R "$DOCKER_USER": "$DATA_DIR"/media
 mkdir -p "$DATA_DIR"/env
+chmod 777 "$DATA_DIR"/env
 #chown -R "$DOCKER_USER": "$DATA_DIR"/env
 mkdir -p "$DATA_DIR"/backups
+chmod 777 "$DATA_DIR"/backups
 #chown -R "$DOCKER_USER": "$DATA_DIR"/backups
 
 # ========================
